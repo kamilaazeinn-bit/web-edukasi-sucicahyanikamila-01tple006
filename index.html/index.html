@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedEdu - Portal Edukasi Penyakit Menular & Pencegahan</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0284c7; /* Medical Blue */
+            --primary-dark: #0369a1;
+            --accent: #10b981; /* Soft Mint Green */
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Header & Navbar */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Disease Cards Grid */
+        .disease-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #cbd5e1;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .meta-tag {
+            display: inline-block;
+            background: #e0f2fe;
+            color: var(--primary-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Styling untuk Elemen Klik (Details & Summary) */
+        details {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            background: var(--bg-light);
+            transition: background 0.2s;
+        }
+
+        details[open] {
+            background: var(--white);
+            border-color: var(--primary);
+            box-shadow: 0 2px 4px rgba(2, 132, 199, 0.1);
+        }
+
+        summary {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            cursor: pointer;
+            list-style: none; /* Menghilangkan panah bawaan browser */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Menambahkan ikon panah kustom */
+        summary::after {
+            content: '+';
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: 400;
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::after {
+            content: '-';
+        }
+
+        .info-block {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .info-block h4 {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .info-block p, .info-block ul {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .info-block ul {
+            padding-left: 1.25rem;
+        }
+
+        /* WHO Handwashing Section */
+        .who-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 4rem;
+        }
+
+        .who-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .who-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .step-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -12px;
+            left: 16px;
+            background: var(--accent);
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        .step-card p {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navbar -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Medical Education
+            </a>
+            <ul class="nav-links">
+                <li><a href="#penyakit">Penyakit Menular</a></li>
+                <li><a href="#pencegahan">Cuci Tangan WHO</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Pusat Edukasi & Pencegahan Penyakit Menular</h1>
+        <p>Kenali karakteristik, sejarah penemuan, serta langkah pencegahan yang tepat untuk mewujudkan masyarakat yang lebih sehat.</p>
+    </section>
+    <section class="hero">
+        <h1>Apa Itu Penyakit Menular?</h1>
+        <p>Penyakit Menular adalah penyakit yang disebut juga infeksi; yang dapat menular ke manusia dimana disebabkan oleh agen biologi, antara lain virus, bakteri, jamur, dan parasit; bukan disebabkan faktor fisik atau kimia; penularan bisa langsung atau melalui media atau vektor dan binatang pembawa penyakit.</p>
+        <p>Penyakit Menular masih menjadi masalah besar kesehatan masyarakat yang dapat menimbulkan kesakitan, kematian, dan kecacatan yang tinggi sehingga perlu dilakukan penyelenggaraan penanggulangan melalui upaya pencegahan, pengendalian, dan pemberantasan yang efektif dan efisien</p>
+        <p>Penyakit Menular bisa menjadi wabah; adalah  kejadian  berjangkitnya suatu  penyakit  menular  dalam  masyarakat  yang  jumlah penderitanya meningkat  secara nyata melebihi dari pada keadaan yang lazim pada  waktu dan daerah tertentu  serta dapat menimbulkan malapetaka. COVID-19 yang disebabkan oleh penularan dan infeksi Virus SARSCoV2 merupakan contoh penyakit menular yang telah menjadi wabah bahkan pandemi yang melanda hampir seluruh penjuru dunia.</p>
+    </section>
+
+    <div class="container">
+
+        <!-- Penyakit Menular Section -->
+        <h2 id="penyakit" class="section-title">Edukasi Penyakit Menular</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Klik pada nama penyakit di bawah kartu untuk melihat penjelasan lengkap, sejarah, dan cara pencegahannya.</p>
+        
+        <div class="disease-grid">
+            
+            <!-- TBC Paru -->
+            <div class="card">
+                <img src="https://yki4tbc.org/wp-content/uploads/2022/11/Cover-Artikel-Dalam-768x432.png" alt="Ilustrasi TBC Paru" class="card-img">
+                <div class="card-content">
+                    <span class="meta-tag">Infeksi Saluran Pernapasan</span>
+                    
+                    <details>
+                        <summary>Tuberkulosis (TBC Paru)</summary>
+                        <div class="info-block">
+                            <h4>Penjelasan:</h4>
+                            <p>Penyakit menular kronis yang disebabkan oleh bakteri <em>Mycobacterium tuberculosis</em>, yang umumnya menyerang paru-paru melalui percikan dahak saat batuk atau bersin.</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Sejarah Ditemukan:</h4>
+                            <p>Bakteri penyebab TBC pertama kali diidentifikasi dan diumumkan oleh ilmuwan Jerman bernama <strong>Robert Koch</strong> pada tanggal 24 Maret 1882.</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Cara Pencegahan:</h4>
+                            <ul>
+                                <li>Mendapatkan vaksin BCG sejak bayi.</li>
+                                <li>Menerapkan etika batuk yang benar.</li>
+                                <li>Menjaga ventilasi rumah tetap baik agar sinar matahari masuk.</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+
+            <!-- Cacar Air (Varicella) -->
+            <div class="card">
+                <img src="https://suaragong.com/wp-content/uploads/2024/10/Satu-Sekolah-Terpaksa-Harus-Lockdown-Akibat-Puluhan-Siswa-Terjangkit-Cacar-Air-dan-Gondongan-1024x1024.webp" alt="Ilustrasi Cacar Air" class="card-img">
+                <div class="card-content">
+                    <span class="meta-tag">Infeksi Virus Kulit</span>
+                    
+                    <details>
+                        <summary>Cacar Air (Varicella)</summary>
+                        <div class="info-block">
+                            <h4>Penjelasan:</h4>
+                            <p>Penyakit sangat menular yang disebabkan oleh virus <em>Varicella-zoster</em>, ditandai dengan munculnya bintil-bintil merah gatal yang berisi cairan di seluruh tubuh.</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Sejarah Ditemukan:</h4>
+                            <p>Istilah "chickenpox" pertama kali dicatat oleh Richard Morton pada tahun 1694. Namun, ilmuwan Jerman <strong>Heinrich Steiner</strong> membuktikan sifat menularnya pada tahun 1875, dan virusnya diisolasi oleh Thomas Weller pada tahun 1953.</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Cara Pencegahan:</h4>
+                            <ul>
+                                <li>Melakukan vaksinasi Varicella.</li>
+                                <li>Menghindari kontak langsung dengan penderita yang sedang aktif mengalami bintil berair.</li>
+                                <li>Mencuci tangan secara rutin dan menjaga daya tahan tubuh.</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+
+            <!--Pneumonia-->
+            <div class="card">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkHuM1b_i86BcdpGEbcskHpAZ2n0fLVwu18xaSKZn18HTYwbLCwftYvgJQqi7PSlJsD-mCnSVKGtUaeEb4py2tT1dzvsL4VDkG06pDwdAta9vVgak_4aFr7c4XS2jDwWnNmmXmpimPC4CfwdJV4Ivihe1pbJLrwVTU9vwje5fEuT-ElPtdDKQqvjQDVw/s416/istockphoto-1130931535-170667a.jpg" alt="Ilustrasi Pneumonia" class="card-img">
+                <div class="card-content">
+                    <span class="meta-tag">Infeksi paru khususnya pada bagian kantung udara kecil di dalam paru yang disebut  <strong>alveoli</strong></span>
+
+                    <details>
+                        <summary>Pneumonia</summary>
+                        <div class="info-block">
+                            <h4>Penjelasan:</h4>
+                            <p>Pneumonia (atau yang sering disebut sebagai "paru-paru basah") adalah kondisi medis berupa peradangan akut pada jaringan paru-paru,<em>khususnya pada kantung udara kecil yang disebut alveoli.</em> Ketika terjadi infeksi, <strong>Alveoli tersebut dapat membengkak dan terisi oleh cairan atau nanah.</strong> Akibatnya, proses pertukaran oksigen dan karbon dioksida di dalam paru-paru terganggu</p>
+                        </div>
+                        <div class="info-black">
+                            <h4>Sejarah Ditemukan:</h4>
+                            <p>Era Kuno (Sekitar 460 sampai 370 SM): Gejala pneumonia pertama kali dicatat oleh dokter Yunani kuno, Hippokrates. Ia menyebut kondisi ini dengan istilah <em>"peripneumonia"</em> dan mendokumentasikan gejala utamanya seperti demam, batuk, dan nyeri dada. Filsuf dan dokter abad ke-12, Maimonides, juga memperjelas gambaran klinis penyakit ini</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Cara Pencegahan:</h4>
+                            <ul>
+                                <li><strong>Vaksinasi</strong> Melakukan vaksinasi yang berkaitan dengan pencegahan infeksi pemicu pneumonia, seperti vaksin pneumokokus (PCV/PPSV), vaksin influenza tahunan, dan vaksin COVID-19</li>
+                                <li><strong>Menghindari Asap Rokok dan Polusi Udara</strong> Merokok merusak pertahanan alami paru-paru terhadap infeksi, sehingga berhenti merokok atau menghindari asap rokok sangat penting</li>
+                                <li><strong>Menghindari Kontak Dekat dengan Orang Sakit</strong> Menerapkan etika batuk/bersin (menutup mulut dan hidung) serta menggunakan masker jika sedang berada di lingkungan yang rentan atau berisiko tinggi</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!--Hepatitis B dan C -->
+            <div class="card">
+                <img src="https://asset.kompas.com/crops/rLJE2Zyq69vzAeJr1vvbhiKNoXc=/1030x659:6484x4295/1200x800/data/photo/2021/09/03/6131ae1e6cad0.jpg" alt="Ilustrasi Hepatitis B dan C" class="card-img">
+                <div class="card-content">
+                    <span class="meta-tag"> Infeksi Virus Khusus Menyerang Hati (Liver)</span>
+
+                    <details>
+                        <summary> Hepatitis B dan C</summary>
+                        <div class="info-block">
+                            <h4>Penjelasan:</h4>
+                            <p>Hepatitis B dan Hepatitis C adalah penyakit peradangan organ hati yang disebabkan oleh infeksi virus berbeda dan <em>berisiko memicu kerusakan hati kronis.</em> Kedua penyakit ini sering tidak menunjukkan gejala pada tahap awal namun menjadi penyebab utama sirosis dan kanker hati di seluruh dunia</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Sejarah Ditemukan:</h4>
+                            <p>Penemuan Hepatitis B (1965 hingga 1967). Dokter dan ahli genetika Amerika Serikat, Baruch Samuel Blumberg, secara tidak sengaja menemukan protein asing dalam sampel darah penduduk asli Australia saat meneliti variasi genetik. Protein yang awalnya dinamai Antigen Australia ini terbukti sebagai penanda permukaan virus hepatitis B (HBsAg). Temuan ini mengantarkan Blumberg meraih Hadiah Nobel Kedokteran tahun 1976 serta melahirkan tes skrining darah dan vaksin hepatitis B pertama pada tahun 1969. Penemuan Hepatitis C (1989). Setelah virus hepatitis A dan B ditemukan, para ilmuwan menyadari masih banyak kasus radang hati pascatransfusi yang belum diketahui penyebabnya. Tiga peneliti, yakni Harvey J. Alter, Michael Houghton, dan Charles M. Rice, berhasil mengidentifikasi dan membuktikan keberadaan virus baru bernama Hepatitis C melalui teknik biologi molekuler pada akhir tahun 1980-an. Ketiganya dianugerahi Hadiah Nobel Kedokteran 2020 karena temuan mereka memungkinkan pengembangan skrining darah donor dan obat penyembuh hepatitis C.</p>
+                        </div>
+                        <div class="info-block"> 
+                            <h4>Cara Pencegahan:</h4>
+                            <ul>
+                                <li><strong>Vaksinasi Hepatitis B</strong> Semua bayi wajib mendapatkan dosis pertama vaksin hepatitis B dalam waktu 24 jam setelah lahir. Orang dewasa yang belum memiliki antibodi, terutama tenaga medis dan keluarga penderita, juga dianjurkan menjalani vaksinasi lengkap tiga dosis.</li>
+                                <li><strong>Pastikan Sterilitas Prosedur Medis dan Estetika</strong> Gunakan fasilitas kesehatan resmi saat membutuhkan transfusi darah atau tindakan medis. Jika ingin membuat tato atau tindik, pastikan jarum dan peralatan yang dipakai benar-benar steril dan sekali pakai.</li>
+                                <li><strong>Skrining Kesehatan secara Rutin</strong> Lakukan pemeriksaan darah untuk mendeteksi antigen HBsAg dan antibodi anti-HCV secara berkala, terutama bagi ibu hamil dan kelompok berisiko tinggi. Menurut panduan Kementerian Kesehatan RI, deteksi dini sangat penting agar pengobatan dapat segera diberikan sebelum terjadi kerusakan hati permanen</li>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Campak (Measles) -->
+            <div class="card">
+                <img src="https://img.merahputih.com/media/bd/a8/cd/bda8cdb5a09c86ccde5a1b10563e4aac.jpg" alt="Ilustrasi Campak" class="card-img">
+                <div class="card-content">
+                    <span class="meta-tag">Infeksi Virus Sistemik</span>
+                    
+                    <details>
+                        <summary>Campak (Measles)</summary>
+                        <div class="info-block">
+                            <h4>Penjelasan:</h4>
+                            <p>Infeksi virus akut dari keluarga <em>paramyxovirus</em> yang sangat menular melalui udara, ditandai dengan demam tinggi, batuk, pilek, serta ruam merah datar di seluruh kulit.</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Sejarah Ditemukan:</h4>
+                            <p>Deskripsi medis akurat pertama mengenai campak ditulis oleh dokter Muslim terkemuka, <strong>Muhammad bin Zakariya ar-Razi (Rhazes)</strong>, pada abad ke-10 di Persia.</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Cara Pencegahan:</h4>
+                            <ul>
+                                <li>Memberikan imunisasi lengkap vaksin MMR (Measles, Mumps, Rubella) pada anak.</li>
+                                <li>Memberikan vitamin A sesuai dosis anjuran tenaga medis saat terjadi wabah.</li>
+                                <li>Isolasi penderita untuk mencegah penularan lewat udara.</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+
+            <!-- HIV / AIDS -->
+            <div class="card">
+                <img src="https://static.republika.co.id/uploads/images/xlarge/virus-hiv_230614171847-476.jpg" alt="Ilustrasi HIV" class="card-img">
+                <div class="card-content">
+                    <span class="meta-tag">Sistem Kekebalan Tubuh</span>
+                    
+                    <details>
+                        <summary>HIV / AIDS</summary>
+                        <div class="info-block">
+                            <h4>Penjelasan:</h4>
+                            <p>HIV (<em>Human Immunodeficiency Virus</em>) adalah virus yang merusak sistem kekebalan tubuh dengan menginfeksi sel darah putih, yang jika dibiarkan berkembang menjadi AIDS.</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Sejarah Ditemukan:</h4>
+                            <p>Virus HIV diisolasi pertama kali pada tahun 1983 oleh tim ilmuwan Prancis di Institut Pasteur yang dipimpin oleh <strong>Luc Montagnier</strong> dan <strong>Françoise Barré-Sinoussi</strong>.</p>
+                        </div>
+                        <div class="info-block">
+                            <h4>Cara Pencegahan (Prinsip ABCDE):</h4>
+                            <ul>
+                                <li><strong>A</strong>bstinence (Tidak melakukan seks bebas).</li>
+                                <li><strong>B</strong>be faithful (Setia pada satu pasangan).</li>
+                                <li><strong>C</strong>ondom (Gunakan kondom jika berisiko).</li>
+                                <li>Hindari penggunaan jarum suntik bergantian.</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- WHO Handwashing Section -->
+        <section id="pencegahan" class="who-section">
+            <div class="who-header">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <h3>Edukasi 6 Langkah Cuci Tangan Sesuai Standar WHO</h3>
+            </div>
+            <p>Cuci tangan pakai sabun dan air mengalir selama 40–60 detik atau menggunakan hand sanitizer selama 20–30 detik untuk memutus rantai penularan kuman.</p>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <span class="step-number">Langkah 1</span>
+                    <p><strong>Telapak Tangan:</strong> Gosok kedua telapak tangan secara merata.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">Langkah 2</span>
+                    <p><strong>Punggung Tangan:</strong> Gosok punggung tangan dan sela-sela jari tangan kiri dan kanan secara bergantian.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">Langkah 3</span>
+                    <p><strong>Sela-sela Jari:</strong> Gosok kedua telapak tangan dan sela-sela jari.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">Langkah 4</span>
+                    <p><strong>Kunci Jari:</strong> Jari-jari sisi dalam kedua tangan saling mengunci.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">Langkah 5</span>
+                    <p><strong>Gosok Ibu Jari:</strong> Gosok ibu jari berputar dalam genggaman tangan kanan secara bergantian.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">Langkah 6</span>
+                    <p><strong>Gosok Ujung Jari:</strong> Gosok memutar ujung jari tangan kanan di telapak tangan kiri, lakukan bergantian.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 | Medical Education. <strong>Dibuat oleh Suci Cahyani Kamila | 261011400268 | Universitas Pamulang | Prodi Teknik Informatika.</strong></p>
+    </footer>
+
+</body>
+</html>
